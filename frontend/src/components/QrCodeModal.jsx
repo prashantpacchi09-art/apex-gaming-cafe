@@ -4,9 +4,8 @@ import { X, Download, Smartphone, Globe, QrCode } from 'lucide-react';
 export default function QrCodeModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
-  const currentHost = window.location.hostname || '192.168.29.25';
-  const webUrl = `http://${currentHost}:5173`;
-  const appDownloadUrl = `http://${currentHost}:5173/ApexGamer.apk`;
+  const webUrl = typeof window !== 'undefined' ? window.location.origin : 'https://apex-gamer-web.onrender.com';
+  const appDownloadUrl = `${webUrl}/ApexGamer.apk`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fade-in">

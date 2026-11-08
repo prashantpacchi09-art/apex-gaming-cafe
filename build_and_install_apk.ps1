@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
         });
 
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("http://192.168.29.25:5173");
+        webView.loadUrl("https://apex-gamer-web.onrender.com");
     }
 
     @Override
@@ -176,14 +176,26 @@ Write-Output "7. Signing APK with apksigner..."
 
 Write-Output "APK built successfully: $workDir\bin\ApexGamer.apk"
 
-Write-Output "8. Installing ApexGamer.apk onto connected phone via ADB..."
-& $adb reverse tcp:5173 tcp:5173
-& $adb reverse tcp:8000 tcp:8000
-& $adb uninstall com.apexgaming.customer | Out-Null
-& $adb push "$workDir\bin\ApexGamer.apk" /data/local/tmp/ApexGamer.apk
-& $adb shell pm install -r -d -g /data/local/tmp/ApexGamer.apk
+# Copy to web public folders for direct mobile browser download
+$rootWeb = "C:\Users\Admin\OneDrive\Documents\Apexgaming\ApexGamingCafe\ApexGamingCafeWeb"
+Copy-Item "$workDir\bin\ApexGamer.apk" -Destination "$rootWeb\frontend\public\ApexGamer.apk" -Force
+Copy-Item "$workDir\bin\ApexGamer.apk" -Destination "$rootWeb\admin-portal\public\ApexGamer.apk" -Force
+Write-Output "Copied ApexGamer.apk to frontend and admin-portal public directories."
 
-Write-Output "9. Launching Apex Gamer app on phone..."
-& $adb shell am start -n com.apexgaming.customer/.MainActivity
-
-Write-Output "=== APEX GAMER APP SUCCESSFULLY INSTALLED AND LAUNCHED! ==="
+try {
+    Write-Output "8. Checking ADB for connected device..."
+    $devices = & $adb devices
+    if ($devices -match "device\b") {
+        Write-Output "Installing ApexGamer.apk onto connected phone via ADB..."
+        & $adb uninstall com.apexgaming.customer | Out-Null
+        & $adb push "$workDir\bin\ApexGamer.apk" /data/local/tmp/ApexGamer.apk
+        & $adb shell pm install -r -d -g /data/local/tmp/ApexGamer.apk
+        Write-Output "9. Launching Apex Gamer app on phone..."
+        & $adb shell am start -n com.apexgaming.customer/.MainActivity
+        Write-Output "=== APEX GAMER APP SUCCESSFULLY INSTALLED AND LAUNCHED ON DEVICE! ==="
+    } else {
+        Write-Output "No physical phone connected via ADB. Direct APK ready for web download!"
+    }
+} catch {
+    Write-Output "ADB install step bypassed."
+}

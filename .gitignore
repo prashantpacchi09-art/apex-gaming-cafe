@@ -6,13 +6,16 @@ node_modules/
 # Build outputs
 dist/
 build/
-*.apk
 bin/
 obj/
 *.idsig
 *.dex
 *.class
 *.zip
+
+# Allow specific release APKs in public directories
+!frontend/public/*.apk
+!admin-portal/public/*.apk
 
 # Python
 __pycache__/

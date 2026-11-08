@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         });
 
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl("http://192.168.29.25:5173");
+        webView.loadUrl("https://apex-gamer-web.onrender.com");
     }
 
     @Override

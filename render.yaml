@@ -24,6 +24,10 @@ services:
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    headers:
+      - path: /*.apk
+        name: Content-Type
+        value: application/vnd.android.package-archive
     routes:
       - type: rewrite
         source: /api/*
@@ -39,6 +43,10 @@ services:
     rootDir: admin-portal
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    headers:
+      - path: /*.apk
+        name: Content-Type
+        value: application/vnd.android.package-archive
     routes:
       - type: rewrite
         source: /api/*

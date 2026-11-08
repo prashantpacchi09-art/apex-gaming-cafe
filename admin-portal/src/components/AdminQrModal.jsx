@@ -4,9 +4,9 @@ import { X, Printer, Download, Smartphone, Globe, QrCode } from 'lucide-react';
 export default function AdminQrModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
-  const currentHost = window.location.hostname || '192.168.29.25';
-  const webUrl = `http://${currentHost}:5173`;
-  const appDownloadUrl = `http://${currentHost}:5173/ApexGamer.apk`;
+  const webUrl = typeof window !== 'undefined' ? window.location.origin : 'https://apex-admin-portal.onrender.com';
+  const customerWebUrl = 'https://apex-gamer-web.onrender.com';
+  const appDownloadUrl = 'https://apex-gamer-web.onrender.com/ApexGamer.apk';
 
   const handlePrint = () => {
     window.print();
