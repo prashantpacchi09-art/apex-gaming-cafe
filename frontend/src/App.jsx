@@ -161,12 +161,12 @@ export default function App() {
                 <div>
                   <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 mb-1">
                     <Zap className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>PC ARENA (240Hz Displays)</span>
+                    <span>PC ARENA (RX 7600 & R5 5600GT)</span>
                   </div>
                   <div className="text-white font-extrabold text-sm group-hover:text-emerald-400 transition-colors">
-                    RTX 40-Series from ₹80/hr
+                    RX 7600 ₹80/hr • R5 5600GT ₹60/hr
                   </div>
-                  <span className="text-[11px] text-neutral-400">Low-latency mechanical battle stations</span>
+                  <span className="text-[11px] text-neutral-400">High-FPS esports rigs with 144Hz+ displays</span>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-neutral-800 text-emerald-400 border border-neutral-700">
                   Select Rig →

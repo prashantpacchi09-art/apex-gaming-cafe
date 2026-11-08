@@ -14,9 +14,8 @@ export default function FloorMap({
 }) {
   // Group stations dynamically by category or zone
   const getZoneTitle = (zoneName) => {
-    if (zoneName === 'PC Arena') return '🖥️ PC Gaming Rigs (Esports & Battle Stations)';
-    if (zoneName === 'Console Lounge') return '🎮 Next-Gen Console Lounge (PlayStation 5 / Xbox)';
-    if (zoneName === 'VIP Suite') return '👑 VIP Cabin & Sim Racing Arena';
+    if (zoneName === 'PC Arena') return '🖥️ PC Gaming Rigs (AMD RX 7600 & R5 5600GT)';
+    if (zoneName === 'Console Lounge') return '🎮 Console Lounge (PlayStation 5 & PlayStation 4)';
     return `🕹️ ${zoneName}`;
   };
 

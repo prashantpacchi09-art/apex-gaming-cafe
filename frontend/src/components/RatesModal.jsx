@@ -6,7 +6,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
 
   const categories = [
     {
-      title: '🎮 PlayStation 5 (PS5 Pro & Standard)',
+      title: '🎮 PlayStation 5 (PS5)',
       type: 'PS5',
       baseRate: '₹150 / hour',
       color: 'emerald',
@@ -19,33 +19,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
       ]
     },
     {
-      title: '🖥️ High-End Esports PC (RTX 4080 / 4090 - 240Hz)',
-      type: 'PC 1',
-      baseRate: '₹80 / hour',
-      color: 'cyan',
-      passes: [
-        { hours: 1, price: 80, orig: 80, save: 0 },
-        { hours: 2, price: 140, orig: 160, save: 20 },
-        { hours: 3, price: 200, orig: 240, save: 40 },
-        { hours: 4, price: 260, orig: 320, save: 60 },
-        { hours: 5, price: 320, orig: 400, save: 80 },
-      ]
-    },
-    {
-      title: '💻 Standard Gaming PC (RTX 4070 - 165Hz)',
-      type: 'PC 2',
-      baseRate: '₹60 / hour',
-      color: 'blue',
-      passes: [
-        { hours: 1, price: 60, orig: 60, save: 0 },
-        { hours: 2, price: 100, orig: 120, save: 20 },
-        { hours: 3, price: 140, orig: 180, save: 40 },
-        { hours: 4, price: 180, orig: 240, save: 60 },
-        { hours: 5, price: 210, orig: 300, save: 90 },
-      ]
-    },
-    {
-      title: '🕹️ PlayStation 4 (PS4 Pro / Slim)',
+      title: '🕹️ PlayStation 4 (PS4)',
       type: 'PS4',
       baseRate: '₹100 / hour',
       color: 'purple',
@@ -55,6 +29,32 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
         { hours: 3, price: 250, orig: 300, save: 50 },
         { hours: 4, price: 320, orig: 400, save: 80 },
         { hours: 5, price: 370, orig: 500, save: 130 },
+      ]
+    },
+    {
+      title: '🖥️ PC - AMD Radeon RX 7600 (Esports Rig)',
+      type: 'PC (RX 7600)',
+      baseRate: '₹80 / hour',
+      color: 'cyan',
+      passes: [
+        { hours: 1, price: 80, orig: 80, save: 0 },
+        { hours: 2, price: 140, orig: 160, save: 20 },
+        { hours: 3, price: 200, orig: 240, save: 40 },
+        { hours: 4, price: 260, orig: 320, save: 60 },
+        { hours: 5, price: 300, orig: 400, save: 100 },
+      ]
+    },
+    {
+      title: '💻 PC - AMD Ryzen 5 5600GT (Gaming Rig)',
+      type: 'PC (R5 5600GT)',
+      baseRate: '₹60 / hour',
+      color: 'blue',
+      passes: [
+        { hours: 1, price: 60, orig: 60, save: 0 },
+        { hours: 2, price: 100, orig: 120, save: 20 },
+        { hours: 3, price: 140, orig: 180, save: 40 },
+        { hours: 4, price: 180, orig: 240, save: 60 },
+        { hours: 5, price: 210, orig: 300, save: 90 },
       ]
     }
   ];
@@ -78,7 +78,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
             Official Gaming Rates & Passes
           </h2>
           <p className="text-xs text-neutral-400 mt-1">
-            All prices are official cafe rates • Zero online advance fee (Pay at counter)
+            Official cafe rates for PS5, PS4, RX 7600 & R5 5600GT • Pay Cash/UPI at Counter
           </p>
         </div>
 
@@ -135,4 +135,3 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
     </div>
   );
 }
-
