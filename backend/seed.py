@@ -3,15 +3,12 @@ from app.models.models import WebUser, DesktopGamingSetup, GamingPlan
 from app.core.security import get_password_hash
 from datetime import datetime
 
+# Exactly 2 PCs and 2 Consoles
 DEFAULT_SETUPS = [
-    {"SetupName": "PC-01 (RX 7600)", "SetupType": "PC (RX 7600)", "HourlyRate": 80.0, "Specifications": "AMD Radeon RX 7600 8GB, 144Hz Gaming Display", "Location": "PC Arena 1"},
-    {"SetupName": "PC-02 (RX 7600)", "SetupType": "PC (RX 7600)", "HourlyRate": 80.0, "Specifications": "AMD Radeon RX 7600 8GB, 144Hz Gaming Display", "Location": "PC Arena 2"},
-    {"SetupName": "PC-03 (R5 5600GT)", "SetupType": "PC (R5 5600GT)", "HourlyRate": 60.0, "Specifications": "AMD Ryzen 5 5600GT, Fast Gaming Display", "Location": "PC Arena 3"},
-    {"SetupName": "PC-04 (R5 5600GT)", "SetupType": "PC (R5 5600GT)", "HourlyRate": 60.0, "Specifications": "AMD Ryzen 5 5600GT, Fast Gaming Display", "Location": "PC Arena 4"},
+    {"SetupName": "PC - RX 7600", "SetupType": "PC (RX 7600)", "HourlyRate": 80.0, "Specifications": "AMD Radeon RX 7600 8GB, 144Hz Gaming Display", "Location": "PC Arena 1"},
+    {"SetupName": "PC - R5 5600GT", "SetupType": "PC (R5 5600GT)", "HourlyRate": 60.0, "Specifications": "AMD Ryzen 5 5600GT, Fast Gaming Display", "Location": "PC Arena 2"},
     {"SetupName": "PS5 - Station 1", "SetupType": "PS5", "HourlyRate": 150.0, "Specifications": "Sony PlayStation 5 + 4K OLED + DualSense", "Location": "Console Lounge 1"},
-    {"SetupName": "PS5 - Station 2", "SetupType": "PS5", "HourlyRate": 150.0, "Specifications": "Sony PlayStation 5 + 55\" 4K TV + DualSense", "Location": "Console Lounge 2"},
-    {"SetupName": "PS4 - Station 1", "SetupType": "PS4", "HourlyRate": 100.0, "Specifications": "Sony PlayStation 4 + FHD TV + DualShock 4", "Location": "Console Lounge 3"},
-    {"SetupName": "PS4 - Station 2", "SetupType": "PS4", "HourlyRate": 100.0, "Specifications": "Sony PlayStation 4 + FHD TV + DualShock 4", "Location": "Console Lounge 4"},
+    {"SetupName": "PS4 - Station 1", "SetupType": "PS4", "HourlyRate": 100.0, "Specifications": "Sony PlayStation 4 + FHD TV + DualShock 4", "Location": "Console Lounge 2"},
 ]
 
 DEFAULT_PLANS = [
@@ -69,9 +66,9 @@ def seed_database():
         )
         db.add(gamer)
 
-    # 3. Synchronize Gaming Setups to exact requested roster:
-    # Consoles: PS5 and PS4 only
-    # PCs: RX 7600 and R5 5600GT only
+    # 3. Synchronize Gaming Setups to exactly 2 PCs and 2 Consoles:
+    # PC: RX 7600 and R5 5600GT
+    # Consoles: PS5 and PS4
     valid_names = [s["SetupName"] for s in DEFAULT_SETUPS]
     existing_setups = db.query(DesktopGamingSetup).all()
     for s in existing_setups:
@@ -79,7 +76,7 @@ def seed_database():
             s.IsActive = False
             s.IsAvailable = False
 
-    # Ensure each default setup exists and is active
+    # Ensure each of the 4 setups exists and is active
     for s in DEFAULT_SETUPS:
         found = db.query(DesktopGamingSetup).filter(DesktopGamingSetup.SetupName == s["SetupName"]).first()
         if not found:
@@ -138,7 +135,7 @@ def seed_database():
 
     db.commit()
     db.close()
-    print("Database synced: Only PS5, PS4, RX 7600, and R5 5600GT are active.")
+    print("Database synced: Exactly 2 PCs and 2 Consoles are active.")
 
 if __name__ == "__main__":
     seed_database()
