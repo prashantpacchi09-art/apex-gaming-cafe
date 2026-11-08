@@ -10,8 +10,8 @@ import urllib.request
 import urllib.error
 import json
 
-# Cloud Backend API URL (Replace with your live cloud domain, e.g. https://apex-api.onrender.com)
-CLOUD_API_URL = os.environ.get("APEX_CLOUD_URL", "http://127.0.0.1:8000")
+# Cloud Backend API URL (Live 24/7 Render cloud domain)
+CLOUD_API_URL = os.environ.get("APEX_CLOUD_URL", "https://apex-cafe-backend.onrender.com")
 ADMIN_EMAIL = os.environ.get("APEX_ADMIN_EMAIL", "admin@apexgaming.com")
 ADMIN_PASSWORD = os.environ.get("APEX_ADMIN_PASS", "admin123")
 
