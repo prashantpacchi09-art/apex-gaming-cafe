@@ -1,0 +1,60 @@
+services:
+  # 1. FastAPI Cloud Backend
+  - type: web
+    name: apex-cafe-backend
+    runtime: python
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: apex-cafe-db
+          property: connectionString
+
+  # 2. Customer Web App
+  - type: web
+    name: apex-gamer-web
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: apex-cafe-backend
+          property: host
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://apex-cafe-backend.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # 3. Staff & Admin Portal
+  - type: web
+    name: apex-admin-portal
+    runtime: static
+    buildCommand: cd admin-portal && npm install && npm run build
+    staticPublishPath: admin-portal/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: apex-cafe-backend
+          property: host
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://apex-cafe-backend.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+databases:
+  - name: apex-cafe-db
+    databaseName: apex_cafe
+    user: apex_user
+    plan: free

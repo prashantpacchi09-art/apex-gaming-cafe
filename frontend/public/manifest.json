@@ -1,0 +1,18 @@
+{
+  "name": "Apex Gamer - Slot Booking & Passes",
+  "short_name": "Apex Gamer",
+  "description": "Reserve high-end gaming rigs and slot passes at Apex Gaming Cafe",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#7e14ff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
