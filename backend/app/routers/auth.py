@@ -27,33 +27,40 @@ def send_otp(req: SendOtpRequest):
         "expires_at": expires_at
     }
 
-    # Optional real email dispatch if SMTP env variables are provided
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_pass = os.getenv("SMTP_PASSWORD")
+    # Send OTP via Gmail SMTP
+    smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
+    smtp_user = os.getenv("SMTP_USER", "")
+    smtp_pass = os.getenv("SMTP_PASSWORD", "")
     smtp_port = int(os.getenv("SMTP_PORT", 587))
 
-    if smtp_host and smtp_user and smtp_pass:
+    email_sent = False
+    if smtp_user and smtp_pass:
         try:
-            msg = MIMEText(f"Your Apex Gaming Cafe verification code is: {code}\n\nValid for 15 minutes.\nDo not share this OTP with anyone.")
-            msg["Subject"] = f"{code} is your Apex Gaming Cafe Login Code"
-            msg["From"] = smtp_user
+            msg = MIMEText(
+                f"Your Apex Gaming Cafe verification code is:\n\n"
+                f"    {code}\n\n"
+                f"Valid for 15 minutes.\n"
+                f"Do not share this OTP with anyone.\n\n"
+                f"— Apex Gaming Cafe"
+            )
+            msg["Subject"] = f"{code} – Your Apex Gaming Cafe Login Code"
+            msg["From"] = f"Apex Gaming Cafe <{smtp_user}>"
             msg["To"] = email
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=5) as server:
+            with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
                 server.starttls()
                 server.login(smtp_user, smtp_pass)
                 server.send_message(msg)
+            email_sent = True
+            print(f"[OTP Email Sent] to {email}")
         except Exception as e:
-            print(f"[OTP Email Dispatch Warning]: {e}")
+            print(f"[OTP Email Error]: {e}")
 
-    print(f"\n==========================================")
-    print(f" [APEX GMAIL OTP] Email: {email} | Code: {code}")
-    print(f"==========================================\n")
+    if not email_sent:
+        print(f"[APEX OTP FALLBACK] Email: {email} | Code: {code} (SMTP not configured)")
 
     return {
         "status": "success",
-        "message": f"Verification code sent to {email}",
-        "demo_otp": code  # Allows zero-delay instant verification and offline fallback
+        "message": f"Verification code sent to {email}"
     }
 
 @router.post("/verify-otp", response_model=Token)

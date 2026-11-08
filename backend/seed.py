@@ -36,6 +36,34 @@ DEFAULT_PLANS = [
     {"Title": "R5 5600GT 3-Hour Pass", "Price": 140.0, "OriginalPrice": 180.0, "DurationHours": 3.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 0, "IsPopular": False, "BadgeText": ""},
     {"Title": "R5 5600GT 4-Hour Pass", "Price": 180.0, "OriginalPrice": 240.0, "DurationHours": 4.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 0, "IsPopular": False, "BadgeText": ""},
     {"Title": "R5 5600GT 5-Hour Pass", "Price": 210.0, "OriginalPrice": 300.0, "DurationHours": 5.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 0, "IsPopular": False, "BadgeText": "Saver"},
+    # PS5 Anytime Passes (1 = Anytime type)
+    {"Title": "PS5 Anytime 7 Hours", "Price": 750.0, "OriginalPrice": 1050.0, "DurationHours": 7.0, "TargetSetupType": "PS5", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "PS5 Anytime 10 Hours", "Price": 1050.0, "OriginalPrice": 1500.0, "DurationHours": 10.0, "TargetSetupType": "PS5", "Type": 1, "IsPopular": True, "BadgeText": "Popular"},
+    {"Title": "PS5 Anytime 15 Hours", "Price": 1500.0, "OriginalPrice": 2250.0, "DurationHours": 15.0, "TargetSetupType": "PS5", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "PS5 Anytime 20 Hours", "Price": 1900.0, "OriginalPrice": 3000.0, "DurationHours": 20.0, "TargetSetupType": "PS5", "Type": 1, "IsPopular": True, "BadgeText": "Best Value"},
+    {"Title": "PS5 Anytime 25 Hours", "Price": 2300.0, "OriginalPrice": 3750.0, "DurationHours": 25.0, "TargetSetupType": "PS5", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "PS5 Anytime 30 Hours", "Price": 2650.0, "OriginalPrice": 4500.0, "DurationHours": 30.0, "TargetSetupType": "PS5", "Type": 1, "IsPopular": False, "BadgeText": "Big Saver"},
+    # PS4 Anytime Passes
+    {"Title": "PS4 Anytime 7 Hours", "Price": 500.0, "OriginalPrice": 700.0, "DurationHours": 7.0, "TargetSetupType": "PS4", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "PS4 Anytime 10 Hours", "Price": 700.0, "OriginalPrice": 1000.0, "DurationHours": 10.0, "TargetSetupType": "PS4", "Type": 1, "IsPopular": True, "BadgeText": "Popular"},
+    {"Title": "PS4 Anytime 15 Hours", "Price": 950.0, "OriginalPrice": 1500.0, "DurationHours": 15.0, "TargetSetupType": "PS4", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "PS4 Anytime 20 Hours", "Price": 1250.0, "OriginalPrice": 2000.0, "DurationHours": 20.0, "TargetSetupType": "PS4", "Type": 1, "IsPopular": True, "BadgeText": "Best Value"},
+    {"Title": "PS4 Anytime 25 Hours", "Price": 1500.0, "OriginalPrice": 2500.0, "DurationHours": 25.0, "TargetSetupType": "PS4", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "PS4 Anytime 30 Hours", "Price": 1750.0, "OriginalPrice": 3000.0, "DurationHours": 30.0, "TargetSetupType": "PS4", "Type": 1, "IsPopular": False, "BadgeText": "Big Saver"},
+    # RX 7600 Anytime Passes
+    {"Title": "RX 7600 Anytime 7 Hours", "Price": 400.0, "OriginalPrice": 560.0, "DurationHours": 7.0, "TargetSetupType": "PC (RX 7600)", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "RX 7600 Anytime 10 Hours", "Price": 550.0, "OriginalPrice": 800.0, "DurationHours": 10.0, "TargetSetupType": "PC (RX 7600)", "Type": 1, "IsPopular": True, "BadgeText": "Popular"},
+    {"Title": "RX 7600 Anytime 15 Hours", "Price": 780.0, "OriginalPrice": 1200.0, "DurationHours": 15.0, "TargetSetupType": "PC (RX 7600)", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "RX 7600 Anytime 20 Hours", "Price": 1000.0, "OriginalPrice": 1600.0, "DurationHours": 20.0, "TargetSetupType": "PC (RX 7600)", "Type": 1, "IsPopular": True, "BadgeText": "Best Value"},
+    {"Title": "RX 7600 Anytime 25 Hours", "Price": 1200.0, "OriginalPrice": 2000.0, "DurationHours": 25.0, "TargetSetupType": "PC (RX 7600)", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "RX 7600 Anytime 30 Hours", "Price": 1400.0, "OriginalPrice": 2400.0, "DurationHours": 30.0, "TargetSetupType": "PC (RX 7600)", "Type": 1, "IsPopular": False, "BadgeText": "Big Saver"},
+    # R5 5600GT Anytime Passes
+    {"Title": "R5 5600GT Anytime 7 Hours", "Price": 300.0, "OriginalPrice": 420.0, "DurationHours": 7.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "R5 5600GT Anytime 10 Hours", "Price": 420.0, "OriginalPrice": 600.0, "DurationHours": 10.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 1, "IsPopular": True, "BadgeText": "Popular"},
+    {"Title": "R5 5600GT Anytime 15 Hours", "Price": 600.0, "OriginalPrice": 900.0, "DurationHours": 15.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "R5 5600GT Anytime 20 Hours", "Price": 780.0, "OriginalPrice": 1200.0, "DurationHours": 20.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 1, "IsPopular": True, "BadgeText": "Best Value"},
+    {"Title": "R5 5600GT Anytime 25 Hours", "Price": 950.0, "OriginalPrice": 1500.0, "DurationHours": 25.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 1, "IsPopular": False, "BadgeText": ""},
+    {"Title": "R5 5600GT Anytime 30 Hours", "Price": 1100.0, "OriginalPrice": 1800.0, "DurationHours": 30.0, "TargetSetupType": "PC (R5 5600GT)", "Type": 1, "IsPopular": False, "BadgeText": "Big Saver"},
 ]
 
 def seed_database():

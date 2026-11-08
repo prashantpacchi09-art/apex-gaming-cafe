@@ -9,7 +9,6 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
-  const [receivedOtp, setReceivedOtp] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -29,8 +28,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
 
     try {
       const res = await api.sendOtp(email);
-      setReceivedOtp(res.demo_otp || '');
-      setSuccessMsg(`Verification code sent to ${email}`);
+      setSuccessMsg(`Verification code sent to ${email}. Check your inbox!`);
       setStep('OTP');
     } catch (err) {
       setError(err.message || 'Failed to send OTP code');
@@ -79,12 +77,6 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
       setError(err.message || 'Invalid email or password');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const autoFillOtp = () => {
-    if (receivedOtp) {
-      setOtp(receivedOtp);
     }
   };
 
@@ -206,21 +198,6 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
         {/* STEP 2: VERIFY OTP */}
         {step === 'OTP' && (
           <form onSubmit={handleVerifyOtp} className="space-y-4">
-            {/* Quick OTP display badge */}
-            {receivedOtp && (
-              <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center justify-between text-xs">
-                <span className="text-neutral-400">
-                  Verification Code: <strong className="font-mono text-emerald-400 text-sm">{receivedOtp}</strong>
-                </span>
-                <button
-                  type="button"
-                  onClick={autoFillOtp}
-                  className="px-2.5 py-1 bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 rounded-lg font-bold hover:bg-emerald-500/25 transition-colors cursor-pointer"
-                >
-                  Auto-fill
-                </button>
-              </div>
-            )}
 
             <div>
               <label className="block text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-1.5">
