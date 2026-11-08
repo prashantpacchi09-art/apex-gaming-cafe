@@ -4,18 +4,20 @@ services:
     name: apex-cafe-backend
     runtime: python
     plan: free
-    buildCommand: cd backend && pip install -r requirements.txt
-    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.12.0
+        value: 3.11.8
 
   # 2. Customer Web App
   - type: web
     name: apex-gamer-web
     runtime: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
     routes:
       - type: rewrite
         source: /api/*
@@ -28,8 +30,9 @@ services:
   - type: web
     name: apex-admin-portal
     runtime: static
-    buildCommand: cd admin-portal && npm install && npm run build
-    staticPublishPath: admin-portal/dist
+    rootDir: admin-portal
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
     routes:
       - type: rewrite
         source: /api/*
