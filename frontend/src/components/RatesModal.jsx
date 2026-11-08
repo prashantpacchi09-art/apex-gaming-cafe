@@ -1,10 +1,12 @@
-import React from 'react';
-import { X, Tag, Sparkles, Clock, CheckCircle2, ShieldCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Tag, Sparkles, Clock, CheckCircle2, ShieldCheck, Flame } from 'lucide-react';
 
 export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelectPlan }) {
+  const [activeTab, setActiveTab] = useState('HOURLY'); // 'HOURLY' | 'ANYTIME'
+
   if (!isOpen) return null;
 
-  const categories = [
+  const hourlyCategories = [
     {
       title: '🎮 PlayStation 5 (PS5)',
       type: 'PS5',
@@ -59,9 +61,64 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
     }
   ];
 
+  const anytimeCategories = [
+    {
+      title: '🎮 PS5 Anytime Play Packages (Valid 30 Days)',
+      type: 'PS5',
+      note: 'Use your hours across multiple visits anytime within 30 days',
+      passes: [
+        { hours: 7, price: 750, orig: 1050, save: 300 },
+        { hours: 10, price: 1050, orig: 1500, save: 450 },
+        { hours: 15, price: 1500, orig: 2250, save: 750 },
+        { hours: 20, price: 1900, orig: 3000, save: 1100 },
+        { hours: 25, price: 2300, orig: 3750, save: 1450 },
+        { hours: 30, price: 2650, orig: 4500, save: 1850 },
+      ]
+    },
+    {
+      title: '🕹️ PS4 Anytime Play Packages (Valid 30 Days)',
+      type: 'PS4',
+      note: 'Use your hours across multiple visits anytime within 30 days',
+      passes: [
+        { hours: 7, price: 500, orig: 700, save: 200 },
+        { hours: 10, price: 700, orig: 1000, save: 300 },
+        { hours: 15, price: 950, orig: 1500, save: 550 },
+        { hours: 20, price: 1250, orig: 2000, save: 750 },
+        { hours: 25, price: 1500, orig: 2500, save: 1000 },
+        { hours: 30, price: 1750, orig: 3000, save: 1250 },
+      ]
+    },
+    {
+      title: '🖥️ PC - RX 7600 Anytime Packages (Valid 30 Days)',
+      type: 'PC (RX 7600)',
+      note: 'High-FPS Esports Rig anytime pass',
+      passes: [
+        { hours: 7, price: 400, orig: 560, save: 160 },
+        { hours: 10, price: 550, orig: 800, save: 250 },
+        { hours: 15, price: 780, orig: 1200, save: 420 },
+        { hours: 20, price: 1000, orig: 1600, save: 600 },
+        { hours: 25, price: 1200, orig: 2000, save: 800 },
+        { hours: 30, price: 1400, orig: 2400, save: 1000 },
+      ]
+    },
+    {
+      title: '💻 PC - R5 5600GT Anytime Packages (Valid 30 Days)',
+      type: 'PC (R5 5600GT)',
+      note: 'Standard Gaming Rig anytime pass',
+      passes: [
+        { hours: 7, price: 300, orig: 420, save: 120 },
+        { hours: 10, price: 420, orig: 600, save: 180 },
+        { hours: 15, price: 600, orig: 900, save: 300 },
+        { hours: 20, price: 780, orig: 1200, save: 420 },
+        { hours: 25, price: 950, orig: 1500, save: 550 },
+        { hours: 30, price: 1100, orig: 1800, save: 700 },
+      ]
+    }
+  ];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-neutral-900 border border-neutral-800 rounded-3xl p-5 sm:p-7 shadow-2xl max-h-[92vh] overflow-y-auto">
+      <div className="relative w-full max-w-3xl bg-neutral-900 border border-neutral-800 rounded-3xl p-5 sm:p-7 shadow-2xl max-h-[92vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-neutral-800 transition-colors cursor-pointer"
@@ -70,7 +127,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
         </button>
 
         {/* Header */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-5">
           <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto mb-3">
             <Tag className="w-6 h-6" />
           </div>
@@ -78,51 +135,118 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
             Official Gaming Rates & Passes
           </h2>
           <p className="text-xs text-neutral-400 mt-1">
-            Official cafe rates for PS5, PS4, RX 7600 & R5 5600GT • Pay Cash/UPI at Counter
+            Official cafe rates • Zero online fee (Pay at counter)
           </p>
+
+          {/* Toggle Tabs */}
+          <div className="inline-flex items-center gap-1.5 p-1 bg-neutral-950 border border-neutral-800 rounded-2xl mt-4">
+            <button
+              onClick={() => setActiveTab('HOURLY')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'HOURLY'
+                  ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              <Clock className="w-3.5 h-3.5" />
+              <span>⚡ Same-Day Passes (1h - 5h)</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('ANYTIME')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeTab === 'ANYTIME'
+                  ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              <Flame className="w-3.5 h-3.5" />
+              <span>🎟️ Anytime Packages (7h - 30h)</span>
+            </button>
+          </div>
         </div>
 
-        {/* Pricing Category Cards */}
-        <div className="space-y-5">
-          {categories.map((cat) => (
-            <div key={cat.type} className="bg-neutral-950 border border-neutral-800 rounded-2xl p-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-neutral-850 pb-2.5 mb-3">
-                <span className="font-bold text-sm text-white">{cat.title}</span>
-                <span className="text-xs text-emerald-400 font-bold bg-neutral-900 px-2.5 py-0.5 rounded-full border border-neutral-800 self-start sm:self-auto">
-                  Base: {cat.baseRate}
-                </span>
-              </div>
+        {/* Tab 1: Hourly Passes */}
+        {activeTab === 'HOURLY' && (
+          <div className="space-y-4">
+            {hourlyCategories.map((cat) => (
+              <div key={cat.type} className="bg-neutral-950 border border-neutral-800 rounded-2xl p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-neutral-850 pb-2.5 mb-3">
+                  <span className="font-bold text-sm text-white">{cat.title}</span>
+                  <span className="text-xs text-emerald-400 font-bold bg-neutral-900 px-2.5 py-0.5 rounded-full border border-neutral-800 self-start sm:self-auto">
+                    Base: {cat.baseRate}
+                  </span>
+                </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                {cat.passes.map((p) => (
-                  <div
-                    key={p.hours}
-                    className="bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-center flex flex-col justify-between relative"
-                  >
-                    {p.save > 0 && (
-                      <span className="absolute -top-1.5 right-1 px-1.5 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[8px]">
-                        -₹{p.save}
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {cat.passes.map((p) => (
+                    <div
+                      key={p.hours}
+                      className="bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-center flex flex-col justify-between relative"
+                    >
+                      {p.save > 0 && (
+                        <span className="absolute -top-1.5 right-1 px-1.5 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[8px]">
+                          -₹{p.save}
+                        </span>
+                      )}
+                      <span className="text-xs text-neutral-400 font-semibold mb-1">
+                        {p.hours} {p.hours === 1 ? 'Hour' : 'Hours'}
                       </span>
-                    )}
-                    <span className="text-xs text-neutral-400 font-semibold mb-1">
-                      {p.hours} {p.hours === 1 ? 'Hour' : 'Hours'}
-                    </span>
-                    <span className="text-base font-black text-white">
-                      ₹{p.price}
-                    </span>
-                    {p.save > 0 ? (
+                      <span className="text-base font-black text-white">
+                        ₹{p.price}
+                      </span>
+                      {p.save > 0 ? (
+                        <span className="text-[10px] text-neutral-500 line-through">
+                          ₹{p.orig}
+                        </span>
+                      ) : (
+                        <span className="text-[10px] text-neutral-500">Standard</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Tab 2: Anytime Packages (7h, 10h, 15h, 20h, 25h, 30h) */}
+        {activeTab === 'ANYTIME' && (
+          <div className="space-y-4">
+            {anytimeCategories.map((cat) => (
+              <div key={cat.type} className="bg-neutral-950 border border-neutral-800 rounded-2xl p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-neutral-850 pb-2 mb-3">
+                  <span className="font-bold text-sm text-white">{cat.title}</span>
+                  <span className="text-[11px] text-emerald-400 font-bold bg-neutral-900 px-2.5 py-0.5 rounded-full border border-neutral-800">
+                    Valid for 30 Days
+                  </span>
+                </div>
+                <p className="text-[11px] text-neutral-400 mb-3">{cat.note}</p>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+                  {cat.passes.map((p) => (
+                    <div
+                      key={p.hours}
+                      className="bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-center flex flex-col justify-between relative"
+                    >
+                      <span className="absolute -top-1.5 right-1 px-1.5 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[8px]">
+                        Save ₹{p.save}
+                      </span>
+                      <span className="text-xs text-neutral-400 font-semibold mb-1">
+                        {p.hours} Hours
+                      </span>
+                      <span className="text-base font-black text-white">
+                        ₹{p.price}
+                      </span>
                       <span className="text-[10px] text-neutral-500 line-through">
                         ₹{p.orig}
                       </span>
-                    ) : (
-                      <span className="text-[10px] text-neutral-500">Standard</span>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <div className="mt-5 pt-3 border-t border-neutral-800 flex items-center justify-between text-xs text-neutral-400">
           <span className="flex items-center gap-1.5 text-emerald-400">

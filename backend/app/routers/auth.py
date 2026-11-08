@@ -29,29 +29,40 @@ def send_otp(req: SendOtpRequest):
 
     # Send OTP via Gmail SMTP
     smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
-    smtp_user = os.getenv("SMTP_USER", "")
-    smtp_pass = os.getenv("SMTP_PASSWORD", "")
-    smtp_port = int(os.getenv("SMTP_PORT", 587))
+    smtp_user = os.getenv("SMTP_USER", "prashvg615@gmail.com").strip()
+    smtp_pass = os.getenv("SMTP_PASSWORD", "xtbpppxaomznwkcb").strip().replace(" ", "")
 
     email_sent = False
     if smtp_user and smtp_pass:
         try:
             msg = MIMEText(
+                f"Hello Gamer!\n\n"
                 f"Your Apex Gaming Cafe verification code is:\n\n"
                 f"    {code}\n\n"
-                f"Valid for 15 minutes.\n"
+                f"This code is valid for 15 minutes.\n"
                 f"Do not share this OTP with anyone.\n\n"
-                f"— Apex Gaming Cafe"
+                f"Game on,\n"
+                f"Apex Gaming Cafe Team"
             )
-            msg["Subject"] = f"{code} – Your Apex Gaming Cafe Login Code"
+            msg["Subject"] = f"{code} is your Apex Gaming Cafe Login Code"
             msg["From"] = f"Apex Gaming Cafe <{smtp_user}>"
             msg["To"] = email
-            with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-                server.starttls()
-                server.login(smtp_user, smtp_pass)
-                server.send_message(msg)
-            email_sent = True
-            print(f"[OTP Email Sent] to {email}")
+
+            # Try TLS (port 587) first, fallback to SSL (port 465)
+            try:
+                with smtplib.SMTP(smtp_host, 587, timeout=8) as server:
+                    server.starttls()
+                    server.login(smtp_user, smtp_pass)
+                    server.send_message(msg)
+                email_sent = True
+            except Exception as e1:
+                print(f"[SMTP 587 failed, trying SSL 465]: {e1}")
+                with smtplib.SMTP_SSL(smtp_host, 465, timeout=8) as server:
+                    server.login(smtp_user, smtp_pass)
+                    server.send_message(msg)
+                email_sent = True
+
+            print(f"[OTP Email Dispatched Successfully] -> {email}")
         except Exception as e:
             print(f"[OTP Email Error]: {e}")
 

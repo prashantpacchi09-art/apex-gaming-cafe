@@ -10,6 +10,12 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.8
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_USER
+        value: prashvg615@gmail.com
+      - key: SMTP_PASSWORD
+        value: xtbpppxaomznwkcb
 
   # 2. Customer Web App
   - type: web
