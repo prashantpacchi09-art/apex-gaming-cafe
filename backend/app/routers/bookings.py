@@ -143,6 +143,51 @@ def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db), cur
     db.refresh(booking)
     return map_booking_to_out(booking)
 
+@router.get("/desktop-feed")
+def get_desktop_feed(db: Session = Depends(get_db)):
+    """
+    Public feed endpoint for Desktop Windows POS / Management software
+    to pull all incoming online slot reservations and synchronize locally.
+    """
+    bookings = db.query(WebBookingModel).order_by(WebBookingModel.BookingDate.desc(), WebBookingModel.StartTime.asc()).all()
+    feed = []
+    for b in bookings:
+        station_name = b.setup.SetupName if b.setup else f"Station #{b.GamingSetupId}"
+        station_type = b.setup.SetupType if b.setup else "PC"
+        feed.append({
+            "id": b.Id,
+            "booking_code": b.BookingCode,
+            "customer_name": b.CustomerName,
+            "customer_email": b.CustomerEmail or "",
+            "customer_phone": b.CustomerPhone or "",
+            "station_id": b.GamingSetupId,
+            "station_name": station_name,
+            "station_type": station_type,
+            "date": b.BookingDate,
+            "start_time": b.StartTime,
+            "end_time": b.EndTime,
+            "duration_hours": float(b.DurationHours),
+            "total_amount": float(b.TotalAmount),
+            "status": b.Status,
+            "notes": b.Remarks or "",
+            "created_at": b.CreatedDate.isoformat() if b.CreatedDate else ""
+        })
+    return feed
+
+@router.post("/{booking_code}/desktop-status")
+def update_desktop_status(booking_code: str, status_update: dict, db: Session = Depends(get_db)):
+    """
+    Endpoint for desktop app to update status when customer checks in or cancels.
+    """
+    new_status = status_update.get("status", "CHECKED_IN")
+    booking = db.query(WebBookingModel).filter(WebBookingModel.BookingCode == booking_code.strip().upper()).first()
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+
+    booking.Status = new_status
+    db.commit()
+    return {"status": "success", "booking_code": booking.BookingCode, "new_status": booking.Status}
+
 @router.get("/my", response_model=List[BookingOut])
 def get_my_bookings(db: Session = Depends(get_db), current_user: WebUser = Depends(get_current_user)):
     bookings = db.query(WebBookingModel).filter(
