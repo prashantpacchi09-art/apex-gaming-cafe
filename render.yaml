@@ -28,6 +28,9 @@ services:
       - path: /*.apk
         name: Content-Type
         value: application/vnd.android.package-archive
+      - path: /*.apk
+        name: Content-Disposition
+        value: attachment; filename="ApexGamer.apk"
     routes:
       - type: rewrite
         source: /api/*
@@ -47,6 +50,9 @@ services:
       - path: /*.apk
         name: Content-Type
         value: application/vnd.android.package-archive
+      - path: /*.apk
+        name: Content-Disposition
+        value: attachment; filename="ApexGamer.apk"
     routes:
       - type: rewrite
         source: /api/*
