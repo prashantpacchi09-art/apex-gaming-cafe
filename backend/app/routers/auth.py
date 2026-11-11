@@ -60,53 +60,88 @@ def send_otp(req: SendOtpRequest):
         "expires_at": expires_at
     }
 
-    # Send OTP via Gmail SMTP (quick 2s timeout check)
-    smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
-    smtp_user = os.getenv("SMTP_USER", "prashvg615@gmail.com").strip()
-    smtp_pass = os.getenv("SMTP_PASSWORD", "xtbpppxaomznwkcb").strip().replace(" ", "")
-
     email_sent = False
     last_error = ""
 
-    if smtp_user and smtp_pass:
+    # 1. Try Resend HTTPS REST API (Port 443 - Works seamlessly on Cloud/Render)
+    resend_api_key = os.getenv("RESEND_API_KEY", "").strip()
+    if resend_api_key:
         try:
-            msg = MIMEText(
-                f"Hello Gamer!\n\n"
-                f"Your Apex Gaming Cafe verification code is:\n\n"
-                f"    {code}\n\n"
-                f"This code is valid for 15 minutes.\n"
-                f"Do not share this OTP with anyone.\n\n"
-                f"Game on,\n"
-                f"Apex Gaming Cafe Team"
+            import json
+            import urllib.request
+            resend_payload = json.dumps({
+                "from": "Apex Gaming Cafe <onboarding@resend.dev>",
+                "to": [email],
+                "subject": f"🔐 {code} is your Apex Gaming Cafe Verification Code",
+                "html": f"""
+                <div style='font-family: Arial, sans-serif; background: #0d0e16; color: #fff; padding: 25px; border-radius: 12px; border: 1px solid #10b981; max-width: 480px;'>
+                    <h2 style='color: #10b981; margin: 0 0 10px 0;'>⚡ APEX GAMING CAFE</h2>
+                    <p style='color: #cbd5e1; font-size: 14px;'>Use the one-time code below to verify your account:</p>
+                    <div style='font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #10b981; background: #1a1b2e; padding: 12px 20px; border-radius: 8px; display: inline-block; margin: 15px 0;'>
+                        {code}
+                    </div>
+                    <p style='color: #94a3b8; font-size: 12px;'>Valid for 15 minutes. Never share this code with anyone.</p>
+                </div>
+                """
+            }).encode('utf-8')
+            resend_req = urllib.request.Request(
+                "https://api.resend.com/emails",
+                data=resend_payload,
+                headers={"Authorization": f"Bearer {resend_api_key}", "Content-Type": "application/json"}
             )
-            msg["Subject"] = f"{code} is your Apex Gaming Cafe Login Code"
-            msg["From"] = f"Apex Gaming Cafe <{smtp_user}>"
-            msg["To"] = email
+            with urllib.request.urlopen(resend_req, timeout=8) as resp:
+                if resp.status in (200, 201):
+                    email_sent = True
+                    print(f"[Resend HTTPS OTP Sent] -> {email}")
+        except Exception as e:
+            last_error = f"Resend error: {e}"
+            print(f"[Resend Email Error]: {e}")
 
+    # 2. Fallback to Gmail SMTP (if raw socket outbound is open)
+    if not email_sent:
+        smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
+        smtp_user = os.getenv("SMTP_USER", "prashvg615@gmail.com").strip()
+        smtp_pass = os.getenv("SMTP_PASSWORD", "xtbpppxaomznwkcb").strip().replace(" ", "")
+
+        if smtp_user and smtp_pass:
             try:
-                with smtplib.SMTP(smtp_host, 587, timeout=2) as server:
-                    server.starttls()
-                    server.login(smtp_user, smtp_pass)
-                    server.send_message(msg)
-                email_sent = True
-            except Exception as e1:
-                last_error = str(e1)
+                msg = MIMEText(
+                    f"Hello Gamer!\n\n"
+                    f"Your Apex Gaming Cafe verification code is:\n\n"
+                    f"    {code}\n\n"
+                    f"This code is valid for 15 minutes.\n"
+                    f"Do not share this OTP with anyone.\n\n"
+                    f"Game on,\n"
+                    f"Apex Gaming Cafe Team"
+                )
+                msg["Subject"] = f"{code} is your Apex Gaming Cafe Login Code"
+                msg["From"] = f"Apex Gaming Cafe <{smtp_user}>"
+                msg["To"] = email
+
                 try:
-                    with smtplib.SMTP_SSL(smtp_host, 465, timeout=2) as server:
+                    with smtplib.SMTP(smtp_host, 587, timeout=3) as server:
+                        server.starttls()
                         server.login(smtp_user, smtp_pass)
                         server.send_message(msg)
                     email_sent = True
-                except Exception as e2:
-                    last_error = str(e2)
-        except Exception as e:
-            last_error = str(e)
+                except Exception as e1:
+                    last_error = str(e1)
+                    try:
+                        with smtplib.SMTP_SSL(smtp_host, 465, timeout=3) as server:
+                            server.login(smtp_user, smtp_pass)
+                            server.send_message(msg)
+                        email_sent = True
+                    except Exception as e2:
+                        last_error = str(e2)
+            except Exception as e:
+                last_error = str(e)
 
+    # Secure response: Never expose OTP on screen in production
     return {
-        "status": "success",
+        "status": "success" if email_sent else "pending",
         "email_sent": email_sent,
-        "message": f"Verification code sent to {email}" if email_sent else f"Verification code ready",
-        "otp": code,
-        "fallback_code": "123456"
+        "message": f"Verification code sent to {email}. Check your inbox or spam folder." if email_sent else f"Email delivery in progress to {email}.",
+        "error_detail": last_error if not email_sent else None
     }
 
 @router.post("/verify-otp", response_model=Token)
@@ -119,14 +154,10 @@ def verify_otp(req: VerifyOtpRequest, db: Session = Depends(get_db)):
         if datetime.utcnow() <= otp_data["expires_at"]:
             valid = True
 
-    # Master fallback codes for testing / offline demo
-    if not valid and req.otp.strip() in ["123456", "999999"]:
-        valid = True
-
     if not valid:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid or expired verification code. Please check and try again."
+            detail="Invalid or expired verification code. Please check your email and try again."
         )
 
     # Clear verified OTP
@@ -228,6 +259,38 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
     db.add(user)
     db.commit()
     db.refresh(user)
+
+    # Sync into Desktop Customers table for desk software recognition
+    try:
+        cust = db.query(DesktopCustomer).filter(DesktopCustomer.Email == user.Email).first()
+        if not cust:
+            code_num = db.query(DesktopCustomer).count() + 101
+            cust = DesktopCustomer(
+                CustomerCode=f"CUST-{code_num}",
+                FullName=user.FullName,
+                MobileNumber=user.Phone or "",
+                Email=user.Email,
+                AadhaarNumber="",
+                RFID="",
+                WalletBalance="0.0",
+                RewardPoints=0,
+                CustomerType=0,
+                IsActive=True,
+                DateOfBirth="",
+                Address="",
+                City="",
+                State="",
+                Pincode="",
+                TotalHoursPlayed=0.0,
+                TotalSpent="0",
+                Notes="Registered via Apex Web/Mobile App",
+                CreatedDate=datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+            )
+            db.add(cust)
+            db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f"[Desktop Customer Sync Warning on Register]: {e}")
 
     user_out = UserOut(
         id=user.Id,
