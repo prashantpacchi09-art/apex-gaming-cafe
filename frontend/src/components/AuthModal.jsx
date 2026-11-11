@@ -29,9 +29,10 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
 
     try {
       const res = await api.sendOtp(email);
-      if (res.email_sent === false && res.otp_hint) {
-        setOtpHint(res.otp_hint);
-        setSuccessMsg(`Instant Login Code: ${res.otp_hint}`);
+      const code = res.otp || res.otp_hint;
+      if (code) {
+        setOtpHint(code);
+        setSuccessMsg(`Instant Verification Code: ${code}`);
       } else {
         setOtpHint('');
         setSuccessMsg(`Verification code sent to ${email}. Check your inbox or spam folder!`);
