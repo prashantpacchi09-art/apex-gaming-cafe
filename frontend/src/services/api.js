@@ -161,11 +161,23 @@ export const api = {
   }
 };
 
-export function calculateStationPrice(station, duration, gamingPlans = []) {
-  if (!station) return { originalPrice: 0, finalPrice: 0, discount: 0, plan: null };
+export function calculateStationPrice(station, duration, gamingPlans = [], isGta6 = false) {
+  if (!station) return { originalPrice: 0, finalPrice: 0, discount: 0, plan: null, isGta6: false };
   const standardTotal = Number(station.hourly_rate) * Number(duration);
+
+  // Strict Policy: No discounts or promotional passes applicable for GTA VI
+  if (isGta6) {
+    return {
+      originalPrice: standardTotal,
+      finalPrice: standardTotal,
+      discount: 0,
+      plan: null,
+      isGta6: true
+    };
+  }
+
   if (!gamingPlans || gamingPlans.length === 0) {
-    return { originalPrice: standardTotal, finalPrice: standardTotal, discount: 0, plan: null };
+    return { originalPrice: standardTotal, finalPrice: standardTotal, discount: 0, plan: null, isGta6: false };
   }
 
   const durationPlans = gamingPlans.filter(p => Number(p.duration_hours) === Number(duration) && p.type === 0);

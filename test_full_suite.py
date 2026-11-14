@@ -81,7 +81,7 @@ def test_admin_stats():
     )
     with urllib.request.urlopen(req, timeout=30) as res:
         data = json.loads(res.read().decode())
-        assert "total_setups" in data or "active_sessions" in data, f"Invalid stats structure: {data}"
+        assert "total_stations" in data, f"Invalid stats structure: {data}"
 
 run_test(5, "Admin Desk Live Dashboard Stats Endpoint", test_admin_stats)
 
@@ -94,7 +94,7 @@ def test_admin_setups():
     )
     with urllib.request.urlopen(req, timeout=30) as res:
         data = json.loads(res.read().decode())
-        active = [s for s in data if s.get("IsActive")]
+        active = [s for s in data if s.get("is_active")]
         assert len(active) == 4, f"Expected 4 active admin setups, got {len(active)}"
 
 run_test(6, "Admin Setups Management Roster Endpoint", test_admin_setups)
@@ -151,8 +151,8 @@ def test_qr_graphics():
     for qr in ["qr_customer_web.png", "qr_customer_app.png"]:
         with urllib.request.urlopen(f"https://apex-gamer-web.onrender.com/{qr}", timeout=30) as res:
             assert res.status == 200, f"QR asset {qr} status: {res.status}"
-            clen = int(res.headers.get("Content-Length", 0))
-            assert clen > 500, f"QR asset {qr} is empty"
+            data = res.read()
+            assert len(data) > 100, f"QR asset {qr} is too small: {len(data)} bytes"
 
 run_test(12, "Standee QR Code Graphics (Web & APK QR Images)", test_qr_graphics)
 

@@ -102,26 +102,30 @@ def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db), cur
     # 4. Total Amount (With official Admin GamingPlan Discount)
     standard_total = round(booking_in.duration_hours * float(setup.HourlyRate), 2)
     total_amount = standard_total
-    try:
-        applicable_plans = db.query(GamingPlan).filter(
-            GamingPlan.IsActive == True,
-            GamingPlan.DurationHours == booking_in.duration_hours,
-            GamingPlan.Type == 0
-        ).all()
-        best_plan = None
-        for p in applicable_plans:
-            target = (p.TargetSetupType or "").upper().strip()
-            stype = (setup.SetupType or "").upper().strip()
-            if target == stype or target in stype or stype in target:
-                if abs(float(p.OriginalPrice) - standard_total) < 1.0:
-                    best_plan = p
-                    break
-                elif best_plan is None:
-                    best_plan = p
-        if best_plan:
-            total_amount = round(float(best_plan.Price), 2)
-    except Exception:
-        pass
+
+    # Strict: NO DISCOUNT FOR GTA 6 (Fixed standard rate of Rs 150/hr on PS5)
+    is_gta6 = "GTA" in (booking_in.notes or "").upper()
+    if not is_gta6:
+        try:
+            applicable_plans = db.query(GamingPlan).filter(
+                GamingPlan.IsActive == True,
+                GamingPlan.DurationHours == booking_in.duration_hours,
+                GamingPlan.Type == 0
+            ).all()
+            best_plan = None
+            for p in applicable_plans:
+                target = (p.TargetSetupType or "").upper().strip()
+                stype = (setup.SetupType or "").upper().strip()
+                if target == stype or target in stype or stype in target:
+                    if abs(float(p.OriginalPrice) - standard_total) < 1.0:
+                        best_plan = p
+                        break
+                    elif best_plan is None:
+                        best_plan = p
+            if best_plan:
+                total_amount = round(float(best_plan.Price), 2)
+        except Exception:
+            pass
 
     # 5. Insert into shared WebBookings table!
     booking = WebBookingModel(

@@ -8,6 +8,7 @@ import AuthModal from './components/AuthModal';
 import MyBookings from './components/MyBookings';
 import QrCodeModal from './components/QrCodeModal';
 import RatesModal from './components/RatesModal';
+import Gta6PosterModal from './components/Gta6PosterModal';
 import { api, calculateStationPrice } from './services/api';
 import { Gamepad2, Sparkles, Zap, ShieldCheck, ArrowRight, Tag, Flame, Smartphone, QrCode } from 'lucide-react';
 
@@ -17,6 +18,8 @@ export default function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isQrOpen, setIsQrOpen] = useState(false);
   const [isRatesOpen, setIsRatesOpen] = useState(false);
+  const [isGta6PosterOpen, setIsGta6PosterOpen] = useState(false);
+  const [isGta6BookingMode, setIsGta6BookingMode] = useState(false);
 
   // Booking states
   const [stations, setStations] = useState([]);
@@ -96,8 +99,8 @@ export default function App() {
   };
 
   const stickyPricing = useMemo(() => {
-    return calculateStationPrice(selectedStation, duration, gamingPlans);
-  }, [selectedStation, duration, gamingPlans]);
+    return calculateStationPrice(selectedStation, duration, gamingPlans, isGta6BookingMode);
+  }, [selectedStation, duration, gamingPlans, isGta6BookingMode]);
 
   return (
     <div className="min-h-screen bg-black text-neutral-100 flex flex-col font-sans selection:bg-emerald-600 selection:text-white">
@@ -109,6 +112,7 @@ export default function App() {
         onOpenAuth={() => setIsAuthOpen(true)}
         onOpenQr={() => setIsQrOpen(true)}
         onOpenRates={() => setIsRatesOpen(true)}
+        onOpenGta6={() => setIsGta6PosterOpen(true)}
       />
 
       {/* QR Codes Modal */}
@@ -122,6 +126,89 @@ export default function App() {
         {currentView === 'booking' && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
             
+            {/* GTA VI Official Launch Hero Showcase Banner */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-pink-950/60 via-purple-950/50 to-neutral-950 border border-pink-500/40 p-4 sm:p-6 mb-5 shadow-2xl shadow-pink-950/30">
+              <div className="absolute -top-16 -right-16 w-64 h-64 bg-pink-600/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-16 -left-16 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-5">
+                {/* Poster Thumbnail */}
+                <div 
+                  onClick={() => setIsGta6PosterOpen(true)}
+                  className="relative shrink-0 w-full sm:w-44 h-48 sm:h-56 rounded-2xl overflow-hidden border border-pink-500/40 shadow-xl cursor-pointer group"
+                >
+                  <img 
+                    src="/gta6_poster.jpg" 
+                    alt="GTA VI Official Launch Poster" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end p-2.5">
+                    <span className="text-[10px] font-bold text-pink-300 flex items-center gap-1 bg-black/70 px-2 py-0.5 rounded-lg border border-pink-500/30">
+                      🔍 Tap to Enlarge
+                    </span>
+                  </div>
+                </div>
+
+                {/* Details & No Discount Announcement */}
+                <div className="flex-1 text-center md:text-left">
+                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2">
+                    <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-md">
+                      🌴 GTA VI Official Launch
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-neutral-900 text-cyan-400 border border-cyan-500/30">
+                      Playable From Nov 19th
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-neutral-900 text-pink-300 border border-pink-500/30">
+                      PlayStation 5
+                    </span>
+                  </div>
+
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight mb-1">
+                    Grand Theft Auto VI at Apex Gaming Cafe
+                  </h2>
+                  <p className="text-xs sm:text-sm text-neutral-300 mb-3 max-w-2xl">
+                    Experience Vice City in 4K 60FPS ray-tracing with DualSense haptic triggers on our PlayStation 5 lounge setup.
+                  </p>
+
+                  {/* Pricing & Strict No Discount Policy */}
+                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-neutral-400 font-semibold">Launch Rate:</span>
+                      <span className="text-xl sm:text-2xl font-black text-emerald-400">₹150 / hr</span>
+                    </div>
+                    <div className="px-3 py-1 rounded-xl bg-rose-950/60 border border-rose-500/50 text-[11px] font-bold text-rose-300 flex items-center gap-1.5">
+                      <span>⛔</span>
+                      <span>Fixed Rate — Strictly No Discounts or Passes Apply</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 w-full md:w-auto shrink-0">
+                  <button
+                    onClick={() => {
+                      const ps5 = stations.find(s => s.name?.includes('PS5') || s.category?.includes('PS5'));
+                      if (ps5) setSelectedStation(ps5);
+                      setSelectedDate('2026-11-19');
+                      setIsGta6BookingMode(true);
+                      setIsBookingModalOpen(true);
+                    }}
+                    className="w-full sm:w-auto px-5 py-3 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white shadow-lg shadow-pink-600/30 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Gamepad2 className="w-4 h-4" />
+                    <span>Pre-Book GTA VI (Nov 19)</span>
+                  </button>
+
+                  <button
+                    onClick={() => setIsGta6PosterOpen(true)}
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl font-bold text-xs bg-neutral-900/90 hover:bg-neutral-850 border border-pink-500/30 text-pink-300 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <span>🖼️ View Poster & Pass Code</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Promotional Offers & Marketing Cards Banner */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
               {/* Promo Card 1: PS5 Hot Rates */}
@@ -337,15 +424,31 @@ export default function App() {
         }}
       />
 
+      <Gta6PosterModal
+        isOpen={isGta6PosterOpen}
+        onClose={() => setIsGta6PosterOpen(false)}
+        onPreBook={() => {
+          const ps5 = stations.find(s => s.name?.includes('PS5') || s.category?.includes('PS5'));
+          if (ps5) setSelectedStation(ps5);
+          setSelectedDate('2026-11-19');
+          setIsGta6BookingMode(true);
+          setIsBookingModalOpen(true);
+        }}
+      />
+
       <BookingModal
         isOpen={isBookingModalOpen}
-        onClose={() => setIsBookingModalOpen(false)}
+        onClose={() => {
+          setIsBookingModalOpen(false);
+          setIsGta6BookingMode(false);
+        }}
         station={selectedStation}
         date={selectedDate}
         startHour={selectedSlot}
         duration={duration}
         currentUser={currentUser}
         gamingPlans={gamingPlans}
+        isGta6Mode={isGta6BookingMode}
         onBookingSuccess={handleBookingCompleted}
         onOpenAuth={() => {
           setIsBookingModalOpen(false);

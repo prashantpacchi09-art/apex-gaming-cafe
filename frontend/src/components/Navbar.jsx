@@ -1,7 +1,7 @@
 import React from 'react';
 import { Gamepad2, LogOut, LayoutGrid, CalendarCheck, QrCode } from 'lucide-react';
 
-export default function Navbar({ currentView, setCurrentView, currentUser, onLogout, onOpenAuth, onOpenQr, onOpenRates }) {
+export default function Navbar({ currentView, setCurrentView, currentUser, onLogout, onOpenAuth, onOpenQr, onOpenRates, onOpenGta6 }) {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-black/90 border-b border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -39,6 +39,14 @@ export default function Navbar({ currentView, setCurrentView, currentUser, onLog
           </button>
 
           <button
+            onClick={onOpenGta6}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-black bg-gradient-to-r from-pink-600/30 to-purple-600/30 hover:from-pink-600/40 hover:to-purple-600/40 text-pink-300 border border-pink-500/40 shadow-sm transition-all cursor-pointer animate-pulse"
+          >
+            <span className="text-sm">🌴</span>
+            <span>GTA VI Launch</span>
+          </button>
+
+          <button
             onClick={onOpenRates}
             className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-semibold text-neutral-300 hover:text-white hover:bg-neutral-900/60 transition-all cursor-pointer"
           >
@@ -62,6 +70,13 @@ export default function Navbar({ currentView, setCurrentView, currentUser, onLog
 
         {/* User Auth Info / Controls */}
         <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            onClick={onOpenGta6}
+            className="md:hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-pink-950/50 text-pink-300 border border-pink-500/40 cursor-pointer"
+          >
+            <span>🌴 GTA 6</span>
+          </button>
+
           <button
             onClick={onOpenRates}
             className="md:hidden flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-emerald-400 border border-neutral-800 cursor-pointer"

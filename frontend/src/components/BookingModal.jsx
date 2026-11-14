@@ -11,17 +11,24 @@ export default function BookingModal({
   duration,
   currentUser,
   gamingPlans = [],
+  isGta6Mode = false,
   onBookingSuccess,
   onOpenAuth,
 }) {
+  const [isGta6, setIsGta6] = useState(isGta6Mode || false);
   const [notes, setNotes] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [confirmedBooking, setConfirmedBooking] = useState(null);
 
+  // Sync if isGta6Mode prop changes
+  React.useEffect(() => {
+    setIsGta6(Boolean(isGta6Mode || date === '2026-11-19'));
+  }, [isGta6Mode, date]);
+
   const pricing = useMemo(() => {
-    return calculateStationPrice(station, duration, gamingPlans);
-  }, [station, duration, gamingPlans]);
+    return calculateStationPrice(station, duration, gamingPlans, isGta6);
+  }, [station, duration, gamingPlans, isGta6]);
 
   if (!isOpen) return null;
 
@@ -37,7 +44,9 @@ export default function BookingModal({
     setError('');
 
     try {
-      const counterNote = notes ? `${notes} [Pay at Counter]` : 'Pay at Counter';
+      const gtaPrefix = isGta6 ? '🎮 GTA VI Launch [No Discounts - Fixed Rate]' : '';
+      const combinedNote = [gtaPrefix, notes].filter(Boolean).join(' | ');
+      const counterNote = combinedNote ? `${combinedNote} [Pay at Counter]` : 'Pay at Counter';
       const res = await api.createBooking({
         station_id: station.id,
         date,
@@ -177,7 +186,14 @@ export default function BookingModal({
                 </span>
               </div>
 
-              {pricing.discount > 0 && (
+              {isGta6 ? (
+                <div className="flex items-center justify-between text-xs text-pink-300 bg-pink-950/40 border border-pink-500/30 px-3 py-2 rounded-lg">
+                  <span className="font-bold flex items-center gap-1.5">
+                    🌴 GTA VI Special Launch:
+                  </span>
+                  <span className="font-extrabold text-rose-300">Fixed Rate • No Discounts</span>
+                </div>
+              ) : pricing.discount > 0 && (
                 <>
                   <div className="flex justify-between items-center text-xs text-neutral-400 pt-2 border-t border-neutral-850">
                     <span>Standard Rate:</span>
@@ -196,6 +212,41 @@ export default function BookingModal({
                 <span className="text-neutral-200 font-semibold">Total Price:</span>
                 <span className="text-xl font-black text-emerald-400">₹{pricing.finalPrice}</span>
               </div>
+            </div>
+
+            {/* GTA VI Launch Mode Selector */}
+            <div 
+              onClick={() => setIsGta6(!isGta6)}
+              className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between mb-4 ${
+                isGta6 
+                  ? 'bg-pink-950/40 border-pink-500/60 shadow-lg shadow-pink-500/10' 
+                  : 'bg-neutral-950 border-neutral-800 hover:border-neutral-700'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="text-xl">🌴</span>
+                <div>
+                  <div className="text-xs font-bold text-white flex items-center gap-2">
+                    <span>Play Grand Theft Auto VI (GTA 6)</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 font-black border border-pink-500/30">
+                      From Nov 19
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-neutral-400 mt-0.5">
+                    {isGta6 ? (
+                      <span className="text-rose-400 font-semibold">Fixed ₹150/hr • Strictly no discount offers or passes apply</span>
+                    ) : (
+                      <span>Tick if you are booking for the GTA VI launch</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <input 
+                type="checkbox" 
+                checked={isGta6} 
+                onChange={(e) => setIsGta6(e.target.checked)} 
+                className="accent-pink-500 w-4 h-4 cursor-pointer shrink-0"
+              />
             </div>
 
             {/* Special Request Notes */}

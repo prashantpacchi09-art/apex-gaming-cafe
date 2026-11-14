@@ -168,6 +168,31 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
         {/* Tab 1: Hourly Passes */}
         {activeTab === 'HOURLY' && (
           <div className="space-y-4">
+            {/* GTA VI Launch Notice */}
+            <div className="bg-gradient-to-r from-pink-950/40 via-purple-950/30 to-neutral-900 border border-pink-500/40 rounded-2xl p-4 shadow-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-2xl">🌴</span>
+                  <div>
+                    <div className="text-sm font-black text-white flex items-center gap-2">
+                      <span>GRAND THEFT AUTO VI (GTA 6)</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 font-extrabold border border-pink-500/30">
+                        From Nov 19
+                      </span>
+                    </div>
+                    <span className="text-xs text-neutral-400">PlayStation 5 4K 60FPS Lounge Setup</span>
+                  </div>
+                </div>
+                <div className="text-right sm:self-auto self-start">
+                  <div className="text-base font-black text-emerald-400">₹150 / hr</div>
+                  <div className="text-[10px] font-bold text-rose-400 uppercase tracking-wide">Fixed Rate • No Discounts</div>
+                </div>
+              </div>
+              <div className="text-[11px] text-neutral-300/80 bg-black/40 rounded-xl p-2.5 border border-neutral-800">
+                ⚡ <strong>Special Launch Event Policy:</strong> Multi-hour combo discounts and membership passes do <strong>not</strong> apply to GTA VI sessions. All GTA VI gaming time is billed at the fixed standard rate of ₹150/hr.
+              </div>
+            </div>
+
             {hourlyCategories.map((cat) => (
               <div key={cat.type} className="bg-neutral-950 border border-neutral-800 rounded-2xl p-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-neutral-850 pb-2.5 mb-3">
