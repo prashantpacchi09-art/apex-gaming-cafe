@@ -273,12 +273,20 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
           </div>
         )}
 
-        <div className="mt-5 pt-3 border-t border-neutral-800 flex items-center justify-between text-xs text-neutral-400">
+        <div className="mt-5 pt-3 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-neutral-400">
           <span className="flex items-center gap-1.5 text-emerald-400">
             <ShieldCheck className="w-4 h-4" />
-            Zero Advance Booking
+            Zero Advance Booking • Pay Cash / UPI at Counter
           </span>
-          <span>Pay Cash / UPI at Counter</span>
+          <a
+            href="/discount_rate_poster.png"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Apex_Gaming_Cafe_Discount_Rates_Poster.png"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs border border-neutral-700 transition-colors cursor-pointer"
+          >
+            <span>🖼️ Download HD Rate Poster</span>
+          </a>
         </div>
       </div>
     </div>

@@ -138,3 +138,4 @@ export default function Gta6PosterModal({ isOpen, onClose, onPreBook }) {
     </div>
   );
 }
+
