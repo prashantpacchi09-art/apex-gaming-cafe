@@ -278,15 +278,26 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
             <ShieldCheck className="w-4 h-4" />
             Zero Advance Booking • Pay Cash / UPI at Counter
           </span>
-          <a
-            href="/discount_rate_poster.png"
-            target="_blank"
-            rel="noopener noreferrer"
-            download="Apex_Gaming_Cafe_Discount_Rates_Poster.png"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-xs border border-neutral-700 transition-colors cursor-pointer"
-          >
-            <span>🖼️ Download HD Rate Poster</span>
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href="/discount_rate_poster.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Apex_Gaming_Cafe_Discount_Rates_Poster.png"
+              className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-bold text-[11px] border border-neutral-700 transition-colors cursor-pointer"
+            >
+              <span>🖼️ Hourly Rates Poster</span>
+            </a>
+            <a
+              href="/anytime_passes_poster.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Apex_Gaming_Cafe_Anytime_Passes_7h_to_30h_Poster.png"
+              className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-[11px] border border-amber-500/40 transition-colors cursor-pointer"
+            >
+              <span>🎟️ 30-Day Passes Poster (7h-30h)</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
