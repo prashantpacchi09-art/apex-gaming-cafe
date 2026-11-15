@@ -63,9 +63,9 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
 
   const anytimeCategories = [
     {
-      title: '🎮 PS5 Anytime Play Packages (Valid 30 Days)',
+      title: '🎮 PS5 Anytime Play Packages (Valid 60 Days)',
       type: 'PS5',
-      note: 'Use your hours across multiple visits anytime within 30 days',
+      note: 'Use your hours across multiple visits anytime within 60 days',
       passes: [
         { hours: 7, price: 750, orig: 1050, save: 300 },
         { hours: 10, price: 1050, orig: 1500, save: 450 },
@@ -76,9 +76,9 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
       ]
     },
     {
-      title: '🕹️ PS4 Anytime Play Packages (Valid 30 Days)',
+      title: '🕹️ PS4 Anytime Play Packages (Valid 60 Days)',
       type: 'PS4',
-      note: 'Use your hours across multiple visits anytime within 30 days',
+      note: 'Use your hours across multiple visits anytime within 60 days',
       passes: [
         { hours: 7, price: 500, orig: 700, save: 200 },
         { hours: 10, price: 700, orig: 1000, save: 300 },
@@ -89,9 +89,9 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
       ]
     },
     {
-      title: '🖥️ PC - RX 7600 Anytime Packages (Valid 30 Days)',
+      title: '🖥️ PC - RX 7600 Anytime Packages (Valid 60 Days)',
       type: 'PC (RX 7600)',
-      note: 'High-FPS Esports Rig anytime pass',
+      note: 'High-FPS Esports Rig anytime pass (Valid 60 Days)',
       passes: [
         { hours: 7, price: 400, orig: 560, save: 160 },
         { hours: 10, price: 550, orig: 800, save: 250 },
@@ -102,9 +102,9 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
       ]
     },
     {
-      title: '💻 PC - R5 5600GT Anytime Packages (Valid 30 Days)',
+      title: '💻 PC - R5 5600GT Anytime Packages (Valid 60 Days)',
       type: 'PC (R5 5600GT)',
-      note: 'Standard Gaming Rig anytime pass',
+      note: 'Standard Gaming Rig anytime pass (Valid 60 Days)',
       passes: [
         { hours: 7, price: 300, orig: 420, save: 120 },
         { hours: 10, price: 420, orig: 600, save: 180 },
@@ -160,7 +160,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
-              <span>🎟️ Anytime Packages (7h - 30h)</span>
+              <span>🎟️ Anytime Packages (7h - 30h • Valid 60 Days)</span>
             </button>
           </div>
         </div>
@@ -242,7 +242,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-neutral-850 pb-2 mb-3">
                   <span className="font-bold text-sm text-white">{cat.title}</span>
                   <span className="text-[11px] text-emerald-400 font-bold bg-neutral-900 px-2.5 py-0.5 rounded-full border border-neutral-800">
-                    Valid for 30 Days
+                    Valid for 60 Days
                   </span>
                 </div>
                 <p className="text-[11px] text-neutral-400 mb-3">{cat.note}</p>
@@ -295,7 +295,7 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
               download="Apex_Gaming_Cafe_Anytime_Passes_7h_to_30h_Poster.png"
               className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-[11px] border border-amber-500/40 transition-colors cursor-pointer"
             >
-              <span>🎟️ 30-Day Passes Poster (7h-30h)</span>
+              <span>🎟️ 60-Day Passes Poster (7h-30h)</span>
             </a>
           </div>
         </div>
