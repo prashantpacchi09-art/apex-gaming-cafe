@@ -90,8 +90,23 @@ export default function Navbar({ currentView, setCurrentView, currentUser, onLog
             title="Scan QR or Download Mobile App"
           >
             <QrCode className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Get Mobile App</span>
+            <span className="hidden sm:inline">Get App & QR</span>
           </button>
+
+          <a
+            href="https://www.instagram.com/apexgamingcafe_rnr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-pink-600/20 to-purple-600/20 hover:from-pink-600/30 hover:to-purple-600/30 text-pink-300 border border-pink-500/30 transition-colors cursor-pointer"
+            title="Follow @APEXGAMINGCAFE_RNR on Instagram"
+          >
+            <svg className="w-3.5 h-3.5 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+            <span className="hidden lg:inline">@APEXGAMINGCAFE_RNR</span>
+          </a>
 
           {currentUser ? (
             <div className="flex items-center gap-2 sm:gap-3">

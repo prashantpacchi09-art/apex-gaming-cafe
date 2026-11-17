@@ -458,7 +458,22 @@ export default function App() {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-neutral-900 bg-neutral-950 py-6 text-center text-xs text-neutral-500">
-        <p>© 2026 Apex Gaming Cafe. Real-time Station Booking & Esports Hub.</p>
+        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p>© 2026 Apex Gaming Cafe. Real-time Station Booking & Esports Hub.</p>
+          <a
+            href="https://www.instagram.com/apexgamingcafe_rnr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-950/40 border border-pink-500/40 text-pink-300 hover:text-white hover:border-pink-500/70 transition-all shadow-sm shadow-pink-500/10"
+          >
+            <svg className="w-4 h-4 text-pink-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+            <span className="font-bold text-[11px]">Follow us on Instagram: @APEXGAMINGCAFE_RNR</span>
+          </a>
+        </div>
       </footer>
     </div>
   );
