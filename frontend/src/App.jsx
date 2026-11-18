@@ -172,17 +172,17 @@ export default function App() {
 
                   {/* Pricing: Launch Day Offer vs Next Day Rate */}
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
-                      <span className="text-[11px] font-bold text-neutral-400">Launch Day (Nov 19):</span>
-                      <span className="text-base sm:text-lg font-black text-emerald-400">₹150 / hr</span>
+                    <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30">
+                      <span className="text-[11px] font-semibold text-neutral-300">Nov 19 Launch:</span>
+                      <span className="text-base font-black text-emerald-400">₹150 / hr</span>
                     </div>
-                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300">
-                      <span className="text-[11px] font-bold text-neutral-400">From Next Day (Nov 20+):</span>
-                      <span className="text-base sm:text-lg font-black text-amber-400">₹200 / hr</span>
+                    <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/30">
+                      <span className="text-[11px] font-semibold text-neutral-300">From Nov 20+:</span>
+                      <span className="text-base font-black text-amber-400">₹200 / hr</span>
                     </div>
-                    <div className="px-2.5 py-1 rounded-xl bg-rose-950/60 border border-rose-500/50 text-[11px] font-bold text-rose-300 flex items-center gap-1.5">
+                    <div className="px-3 py-1.5 rounded-xl bg-rose-950/50 border border-rose-500/40 text-[11px] font-bold text-rose-300 flex items-center gap-1.5">
                       <span>⛔</span>
-                      <span>Fixed Rates • No Discounts Apply</span>
+                      <span>Fixed Rates • No Discounts</span>
                     </div>
                   </div>
                 </div>

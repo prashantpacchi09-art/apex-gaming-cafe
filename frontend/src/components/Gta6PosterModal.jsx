@@ -76,14 +76,20 @@ export default function Gta6PosterModal({ isOpen, onClose, onPreBook }) {
                 <span className="font-bold text-white">PlayStation 5 (4K 60FPS)</span>
               </div>
 
-              <div className="pt-2 border-t border-neutral-800 space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-emerald-400 font-bold">Launch Day Special (Nov 19):</span>
-                  <span className="text-lg font-black text-emerald-400">₹150 / hour</span>
+              <div className="pt-2.5 border-t border-neutral-800 space-y-2">
+                <div className="flex items-center justify-between text-xs p-2 rounded-xl bg-emerald-950/30 border border-emerald-500/20">
+                  <span className="text-neutral-200 font-semibold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Launch Day Special (Nov 19):
+                  </span>
+                  <span className="text-base font-black text-emerald-400">₹150 / hr</span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-amber-400 font-bold">From Next Day (Nov 20 onwards):</span>
-                  <span className="text-lg font-black text-amber-400">₹200 / hour</span>
+                <div className="flex items-center justify-between text-xs p-2 rounded-xl bg-amber-950/30 border border-amber-500/20">
+                  <span className="text-neutral-200 font-semibold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                    From Next Day (Nov 20 onwards):
+                  </span>
+                  <span className="text-base font-black text-amber-400">₹200 / hr</span>
                 </div>
               </div>
             </div>
