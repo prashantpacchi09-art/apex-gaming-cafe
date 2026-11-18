@@ -27,8 +27,8 @@ export default function BookingModal({
   }, [isGta6Mode, date]);
 
   const pricing = useMemo(() => {
-    return calculateStationPrice(station, duration, gamingPlans, isGta6);
-  }, [station, duration, gamingPlans, isGta6]);
+    return calculateStationPrice(station, duration, gamingPlans, isGta6, date);
+  }, [station, duration, gamingPlans, isGta6, date]);
 
   if (!isOpen) return null;
 
@@ -44,7 +44,8 @@ export default function BookingModal({
     setError('');
 
     try {
-      const gtaPrefix = isGta6 ? '🎮 GTA VI Launch [No Discounts - Fixed Rate]' : '';
+      const isLaunchDay = date === '2026-11-19';
+      const gtaPrefix = isGta6 ? `🎮 GTA VI [${isLaunchDay ? 'Launch Day Offer ₹150/h' : 'Rate ₹200/h'} - Fixed Rate]` : '';
       const combinedNote = [gtaPrefix, notes].filter(Boolean).join(' | ');
       const counterNote = combinedNote ? `${combinedNote} [Pay at Counter]` : 'Pay at Counter';
       const res = await api.createBooking({
@@ -189,9 +190,9 @@ export default function BookingModal({
               {isGta6 ? (
                 <div className="flex items-center justify-between text-xs text-pink-300 bg-pink-950/40 border border-pink-500/30 px-3 py-2 rounded-lg">
                   <span className="font-bold flex items-center gap-1.5">
-                    🌴 GTA VI Special Launch:
+                    🌴 {pricing.isLaunchDay ? 'GTA VI Launch Day Offer:' : 'GTA VI Standard Rate:'}
                   </span>
-                  <span className="font-extrabold text-rose-300">Fixed Rate • No Discounts</span>
+                  <span className="font-extrabold text-emerald-300">₹{pricing.gtaRate || 200}/hr • Fixed Rate</span>
                 </div>
               ) : pricing.discount > 0 && (
                 <>
@@ -234,9 +235,11 @@ export default function BookingModal({
                   </div>
                   <div className="text-[11px] text-neutral-400 mt-0.5">
                     {isGta6 ? (
-                      <span className="text-rose-400 font-semibold">Fixed ₹150/hr • Strictly no discount offers or passes apply</span>
+                      <span className="text-amber-300 font-semibold">
+                        {date === '2026-11-19' ? 'Nov 19 Launch Offer: ₹150/hr' : 'From Nov 20: ₹200/hr'} • Strictly no discounts apply
+                      </span>
                     ) : (
-                      <span>Tick if you are booking for the GTA VI launch</span>
+                      <span>Tick if you are booking for Grand Theft Auto VI</span>
                     )}
                   </div>
                 </div>

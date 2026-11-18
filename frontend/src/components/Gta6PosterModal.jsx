@@ -7,7 +7,8 @@ export default function Gta6PosterModal({ isOpen, onClose, onPreBook }) {
   const shareText = encodeURIComponent(
     "🌴 GRAND THEFT AUTO VI ARRIVES AT APEX GAMING CAFE!\n\n" +
     "🎮 Available from: November 19th\n" +
-    "⚡ Rate: Only ₹150/hr on PlayStation 5 (Fixed Rate • No discounts)\n" +
+    "🔥 Launch Day Offer (Nov 19): Only ₹150/hr!\n" +
+    "⚡ From Next Day (Nov 20+): ₹200/hr\n" +
     "🎟️ Pre-book your slot online & get your instant pass code:\n" +
     "https://apex-gamer-web.onrender.com"
   );
@@ -75,9 +76,15 @@ export default function Gta6PosterModal({ isOpen, onClose, onPreBook }) {
                 <span className="font-bold text-white">PlayStation 5 (4K 60FPS)</span>
               </div>
 
-              <div className="flex items-center justify-between text-xs pt-2 border-t border-neutral-800">
-                <span className="text-neutral-300 font-bold">Launch Rate:</span>
-                <span className="text-xl font-black text-emerald-400">₹150 / hour</span>
+              <div className="pt-2 border-t border-neutral-800 space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-emerald-400 font-bold">Launch Day Special (Nov 19):</span>
+                  <span className="text-lg font-black text-emerald-400">₹150 / hour</span>
+                </div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-amber-400 font-bold">From Next Day (Nov 20 onwards):</span>
+                  <span className="text-lg font-black text-amber-400">₹200 / hour</span>
+                </div>
               </div>
             </div>
 
@@ -89,7 +96,7 @@ export default function Gta6PosterModal({ isOpen, onClose, onPreBook }) {
                   Fixed Rate Policy — No Discounts Applicable
                 </span>
                 <span className="text-rose-200/80 leading-relaxed block text-[11px]">
-                  Grand Theft Auto VI is an exclusive special launch event. <strong>No membership passes, multi-hour discount combos, or coupon codes</strong> are applicable. All sessions are billed at the fixed standard rate of ₹150/hr.
+                  Grand Theft Auto VI special event: <strong>Launch Day Offer on Nov 19 is ₹150/hr</strong>, and <strong>₹200/hr from Nov 20 onwards</strong>. Strictly no membership passes, multi-hour discount combos, or coupon codes are applicable.
                 </span>
               </div>
             </div>

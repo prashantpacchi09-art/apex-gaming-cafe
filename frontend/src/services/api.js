@@ -161,18 +161,23 @@ export const api = {
   }
 };
 
-export function calculateStationPrice(station, duration, gamingPlans = [], isGta6 = false) {
+export function calculateStationPrice(station, duration, gamingPlans = [], isGta6 = false, date = '') {
   if (!station) return { originalPrice: 0, finalPrice: 0, discount: 0, plan: null, isGta6: false };
   const standardTotal = Number(station.hourly_rate) * Number(duration);
 
-  // Strict Policy: No discounts or promotional passes applicable for GTA VI
+  // Strict Policy: GTA VI Launch Day (Nov 19) is Rs 150/hr; From next day onwards is Rs 200/hr. No discounts.
   if (isGta6) {
+    const isLaunchDay = date === '2026-11-19';
+    const hourlyRate = isLaunchDay ? 150 : 200;
+    const gtaTotal = hourlyRate * Number(duration);
     return {
-      originalPrice: standardTotal,
-      finalPrice: standardTotal,
+      originalPrice: gtaTotal,
+      finalPrice: gtaTotal,
       discount: 0,
       plan: null,
-      isGta6: true
+      isGta6: true,
+      gtaRate: hourlyRate,
+      isLaunchDay,
     };
   }
 

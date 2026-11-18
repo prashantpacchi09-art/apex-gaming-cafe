@@ -183,13 +183,14 @@ export default function RatesModal({ isOpen, onClose, gamingPlans = [], onSelect
                     <span className="text-xs text-neutral-400">PlayStation 5 4K 60FPS Lounge Setup</span>
                   </div>
                 </div>
-                <div className="text-right sm:self-auto self-start">
-                  <div className="text-base font-black text-emerald-400">₹150 / hr</div>
+                <div className="text-right sm:self-auto self-start space-y-0.5">
+                  <div className="text-xs sm:text-sm font-black text-emerald-400">Launch Day (Nov 19): ₹150 / hr</div>
+                  <div className="text-xs sm:text-sm font-black text-amber-400">From Next Day (Nov 20+): ₹200 / hr</div>
                   <div className="text-[10px] font-bold text-rose-400 uppercase tracking-wide">Fixed Rate • No Discounts</div>
                 </div>
               </div>
               <div className="text-[11px] text-neutral-300/80 bg-black/40 rounded-xl p-2.5 border border-neutral-800">
-                ⚡ <strong>Special Launch Event Policy:</strong> Multi-hour combo discounts and membership passes do <strong>not</strong> apply to GTA VI sessions. All GTA VI gaming time is billed at the fixed standard rate of ₹150/hr.
+                ⚡ <strong>Special Launch Policy:</strong> GTA VI is <strong>₹150/hr on Launch Day (Nov 19)</strong> and <strong>₹200/hr from Nov 20 onwards</strong>. Multi-hour combo discounts and membership passes do <strong>not</strong> apply.
               </div>
             </div>
 

@@ -99,8 +99,8 @@ export default function App() {
   };
 
   const stickyPricing = useMemo(() => {
-    return calculateStationPrice(selectedStation, duration, gamingPlans, isGta6BookingMode);
-  }, [selectedStation, duration, gamingPlans, isGta6BookingMode]);
+    return calculateStationPrice(selectedStation, duration, gamingPlans, isGta6BookingMode, selectedDate);
+  }, [selectedStation, duration, gamingPlans, isGta6BookingMode, selectedDate]);
 
   return (
     <div className="min-h-screen bg-black text-neutral-100 flex flex-col font-sans selection:bg-emerald-600 selection:text-white">
@@ -170,15 +170,19 @@ export default function App() {
                     Experience Vice City in 4K 60FPS ray-tracing with DualSense haptic triggers on our PlayStation 5 lounge setup.
                   </p>
 
-                  {/* Pricing & Strict No Discount Policy */}
-                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mb-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-neutral-400 font-semibold">Launch Rate:</span>
-                      <span className="text-xl sm:text-2xl font-black text-emerald-400">₹150 / hr</span>
+                  {/* Pricing: Launch Day Offer vs Next Day Rate */}
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+                      <span className="text-[11px] font-bold text-neutral-400">Launch Day (Nov 19):</span>
+                      <span className="text-base sm:text-lg font-black text-emerald-400">₹150 / hr</span>
                     </div>
-                    <div className="px-3 py-1 rounded-xl bg-rose-950/60 border border-rose-500/50 text-[11px] font-bold text-rose-300 flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300">
+                      <span className="text-[11px] font-bold text-neutral-400">From Next Day (Nov 20+):</span>
+                      <span className="text-base sm:text-lg font-black text-amber-400">₹200 / hr</span>
+                    </div>
+                    <div className="px-2.5 py-1 rounded-xl bg-rose-950/60 border border-rose-500/50 text-[11px] font-bold text-rose-300 flex items-center gap-1.5">
                       <span>⛔</span>
-                      <span>Fixed Rate — Strictly No Discounts or Passes Apply</span>
+                      <span>Fixed Rates • No Discounts Apply</span>
                     </div>
                   </div>
                 </div>

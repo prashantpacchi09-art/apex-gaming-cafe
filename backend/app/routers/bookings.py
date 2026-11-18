@@ -103,9 +103,15 @@ def create_booking(booking_in: BookingCreate, db: Session = Depends(get_db), cur
     standard_total = round(booking_in.duration_hours * float(setup.HourlyRate), 2)
     total_amount = standard_total
 
-    # Strict: NO DISCOUNT FOR GTA 6 (Fixed standard rate of Rs 150/hr on PS5)
+    # Strict GTA 6 Pricing Policy:
+    # Launch day (2026-11-19): Rs 150/hr offer
+    # From next day onwards (>= 2026-11-20): Rs 200/hr
+    # Strictly NO discounts or promo passes apply to GTA 6.
     is_gta6 = "GTA" in (booking_in.notes or "").upper()
-    if not is_gta6:
+    if is_gta6:
+        gta_rate = 150.0 if booking_in.date == "2026-11-19" else 200.0
+        total_amount = round(booking_in.duration_hours * gta_rate, 2)
+    else:
         try:
             applicable_plans = db.query(GamingPlan).filter(
                 GamingPlan.IsActive == True,
